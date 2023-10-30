@@ -1,20 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./views/Login.tsx";
-import BugsDashboard from "./views/BugsDashboard.tsx";
+import { BrowserRouter, Routes } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes.tsx";
 
 const App = () => {
   return (
     <div className="bg-bkg">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login></Login>} />
-          <Route
-            path="/hello"
-            element={<div className="text-7xl">Vozdrica</div>}
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/bugs-overview" element={<BugsDashboard />} />
-        </Routes>
+        <AppRoutes />
       </BrowserRouter>
     </div>
   );
