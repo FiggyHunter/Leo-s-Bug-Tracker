@@ -1,25 +1,38 @@
 import { useState } from "react";
 
 const useLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setEmail(e.target.value);
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
+  const [errors, setErrors] = useState({ email: null, password: null });
 
-  const submitLogin = (e: React.ChangeEvent<HTMLButtonElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const validation = () => {
+    // validation logic:
+    // email: OK
+
+    // password: empty
+    setErrors((prevPasswords) => {
+      return { ...prevPasswords, password: { message: "Empty password" } };
+    });
+  };
+
+  const submitLogin = (
+    e: React.ChangeEvent<HTMLButtonElement> | KeyboardEvent
+  ) => {
     e.preventDefault();
-    console.log("Logged in!");
+    validation();
+    console.log("Logged in");
   };
 
   return {
-    email,
-    password,
-    handleEmailChange,
-    handlePasswordChange,
+    formData,
+    handleInputChange,
     submitLogin,
+    errors,
   };
 };
 
