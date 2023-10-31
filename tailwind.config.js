@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const plugin = require("tailwindcss/plugin");
 
 /** @type {import('tailwindcss').Config} **/
 export default {
@@ -33,11 +34,24 @@ export default {
         bkg: "var(--color-bkg)",
         content: "var(--color-content)",
         transparentFill: "var(--input-fill)",
+        red: "#ff0000",
       },
       fontFamily: {
         onest: ["Onest", "sans-serif"],
       },
+      height: {
+        screen: ["100vh /* fallback for Opera, IE and etc. */", "100dvh"],
+        fill: ["100vh /* fallback for Opera, IE and etc. */", "100dvh"],
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addBase, addComponents, addUtilities, theme }) {
+      addUtilities({
+        ".h-my-screen": {
+          height: ["100vh /* fallback for Opera, IE and etc. */", "100dvh"],
+        },
+      });
+    }),
+  ],
 };
