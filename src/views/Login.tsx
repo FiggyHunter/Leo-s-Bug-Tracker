@@ -1,80 +1,83 @@
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import { TextField } from "@mui/material";
 import { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-import picture from "../images/slika123.png";
+import InputField from "../components/login/inputField";
+import useLogin from "../hooks/useLogin.ts";
+import Button from "../components/login/Button";
+import ButtonNavigation from "./ButtonNavigation.tsx";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { formData, handleInputChange, submitLogin, errors } = useLogin();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const login = async () => {
-    const result = await Axios.post("http://localhost:4000/auth/login", {
-      email: email,
-      password: password,
-    });
-    if (result?.data) {
-      const { token } = result.data;
-      localStorage.setItem("token", token);
-      navigate("/bugs-overview");
-    }
-  };
+  // const login = async () => {
+  //   const result = await Axios.post("http://localhost:4000/auth/login", {
+  //     email: email,
+  //     password: password,
+  //   });
+  //   if (result?.data) {
+  //     const { token } = result.data;
+  //     localStorage.setItem("token", token);
+  //     navigate("/bugs-overview");
+  //   }
+  // };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setEmail(e.target.value);
+  // };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
+  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPassword(e.target.value);
+  // };
+
+  // Theme changer:
+  // const changeTheme = (theme) => {
+  //   document.documentElement.dataset.theme = theme;
+  // };
 
   return (
-    <div
-      className={"z-0 grid place-content-center h-screen relative custom-blur "}
-      style={{
-        backgroundImage: `url(${picture})`,
-      }}
-    >
-      <Card className={"filter-none z-30"} sx={{ zIndex: 10, minWidth: 400 }}>
-        <CardContent className={" w-full grid gap-5"}>
-          <h1 className={"text-center text-2xl text-blue-400 font-black"}>
-            Bug tracker application
-          </h1>
-          <TextField
-            className={"block w-full"}
-            id="outlined-basic"
-            label="Email"
-            variant="outlined"
-            value={email}
-            onChange={handleEmailChange}
-          />
-          <TextField
-            className={"block w-full"}
-            id="outlined-basic"
-            label="Password"
-            variant="outlined"
-            value={password}
-            onChange={handlePasswordChange}
-            type={"password"}
-          />
-        </CardContent>
-        <CardActions className={"w-full"}>
-          <Button
-            onClick={login}
-            className={"block w-full text-center"}
-            size="small"
-          >
-            Login
-          </Button>
-        </CardActions>
-      </Card>
-    </div>
+    <main className="lg:grid lg:grid-cols-2 lg:place-content-center flex flex-col h-screen justify-center w-75p mx-auto gap-5">
+      <div className="sm:order-2 place-self-center lg:w-4/5">
+        <h1 className="font-onest font-bold text-accent-1 text-center text-2xl lg:text-5xl">
+          LEO'S BUG TRACKER
+        </h1>
+        <p className="font-onest leading-5 font-thin text-content line text-center text-base w-10/12 mx-auto lg:text-2xl lg:leading-8">
+          The view of your bugs doesn’t need to be a bad experience.
+        </p>
+        <section className="my-4">
+          <form>
+            <InputField
+              placeholder={"What's your email address?"}
+              type={"text"}
+              handleChange={handleInputChange}
+              error={errors.email}
+            />
+            <InputField
+              placeholder={"Can we have your password?"}
+              type={"password"}
+              handleChange={handleInputChange}
+              error={errors.password}
+            />
+            <Button text={"LOGIN"} handler={submitLogin} />
+          </form>
+        </section>
+        <div className="flex gap-4 justify-between items-center">
+          <div className="border-t  flex-grow border-content"></div>
+          <span className="font-onest text-content ">
+            Don't have an account?
+          </span>
+          <div className="border-t  flex-grow border-content"></div>
+        </div>
+        <ButtonNavigation text={"REGISTER HERE"} route={"/register"} />
+      </div>
+      <img
+        className="sm:order-1 md:order-2 rounded-3xl"
+        src="/bugs-login.png"
+        alt=""
+        srcSet=""
+      />
+    </main>
   );
 };
 
