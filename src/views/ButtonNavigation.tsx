@@ -2,7 +2,7 @@ import { Path, useNavigate } from "react-router-dom";
 
 interface ButtonNavigationProps {
   text: String;
-  route: Partial<Path>;
+  route: Partial<Path> | string;
 }
 
 const ButtonNavigation: React.FC<ButtonNavigationProps> = ({ text, route }) => {
