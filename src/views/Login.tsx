@@ -1,13 +1,11 @@
-import { useState } from "react";
-import Axios from "axios";
-import { useNavigate } from "react-router-dom";
-import InputField from "../components/login/inputField";
+import InputField from "../components/login/InputField.tsx";
 import useLogin from "../hooks/useLogin.ts";
 import Button from "../components/login/Button";
 import ButtonNavigation from "./ButtonNavigation.tsx";
 
 const Login = () => {
-  const { formData, handleInputChange, submitLogin, errors } = useLogin();
+  const { loginFormData, handleInputChange, submitLogin, loginErrors } =
+    useLogin();
 
   // const navigate = useNavigate();
 
@@ -37,7 +35,7 @@ const Login = () => {
   // };
 
   return (
-    <main className="lg:grid lg:grid-cols-2 lg:place-content-center flex flex-col h-screen justify-center w-75p mx-auto gap-5">
+    <main className="lg:grid lg:grid-cols-2 lg:place-items-center flex flex-col h-my-screen justify-center w-75p mx-auto gap-5">
       <div className="sm:order-2 place-self-center lg:w-4/5">
         <h1 className="font-onest font-bold text-accent-1 text-center text-2xl lg:text-5xl">
           LEO'S BUG TRACKER
@@ -49,15 +47,17 @@ const Login = () => {
           <form>
             <InputField
               placeholder={"What's your email address?"}
-              type={"text"}
+              name={"email"}
+              type={"email"}
               handleChange={handleInputChange}
-              error={errors.email}
+              error={loginErrors.email}
             />
             <InputField
               placeholder={"Can we have your password?"}
+              name={"password"}
               type={"password"}
               handleChange={handleInputChange}
-              error={errors.password}
+              error={loginErrors.password}
             />
             <Button text={"LOGIN"} handler={submitLogin} />
           </form>
@@ -72,7 +72,7 @@ const Login = () => {
         <ButtonNavigation text={"REGISTER HERE"} route={"/register"} />
       </div>
       <img
-        className="sm:order-1 md:order-2 rounded-3xl"
+        className="sm:order-1 w-4/6 lg:w-full lg:order-2 self-center rounded-3xl"
         src="/bugs-login.png"
         alt=""
         srcSet=""
