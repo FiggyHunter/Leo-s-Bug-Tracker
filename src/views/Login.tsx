@@ -2,10 +2,16 @@ import InputField from "../components/login/InputField.tsx";
 import useLogin from "../hooks/useLogin.ts";
 import Button from "../components/login/Button";
 import ButtonNavigation from "./ButtonNavigation.tsx";
+import handleLogin from "@/api/login/loginUser.ts";
 
 const Login = () => {
-  const { loginFormData, handleInputChange, submitLogin, loginErrors } =
-    useLogin();
+  const {
+    loginFormData,
+    handleInputChange,
+    submitLogin,
+    loginErrors,
+    handleLogin,
+  } = useLogin();
 
   // const navigate = useNavigate();
 
@@ -59,7 +65,7 @@ const Login = () => {
               handleChange={handleInputChange}
               error={loginErrors.password}
             />
-            <Button text={"LOGIN"} handler={submitLogin} />
+            <Button text={"LOGIN"} handler={handleLogin} />
           </form>
         </section>
         <div className="flex gap-4 justify-between items-center">

@@ -4,7 +4,12 @@ import ButtonNavigation from "./ButtonNavigation";
 import useRegister from "../hooks/useRegister";
 
 const Register = () => {
-  const { registerFormData, handleInputChange, registerErrors } = useRegister();
+  const {
+    registerFormData,
+    handleInputChange,
+    registerErrors,
+    handleRegister,
+  } = useRegister();
   return (
     <main className="lg:grid lg:grid-cols-2 lg:place-items-center flex flex-col h-my-screen justify-center w-75p mx-auto gap-5">
       <div className="sm:order-2 place-self-center lg:w-4/5">
@@ -32,12 +37,12 @@ const Register = () => {
             />
             <InputField
               placeholder={"Can you repeat the password?"}
-              name={"repeat-password"}
+              name={"repeatPassword"}
               type={"password"}
               handleChange={handleInputChange}
               error={registerErrors.repeatPassword}
             />
-            <Button text={"REGISTER"} handler={() => {}} />
+            <Button text={"REGISTER"} handler={handleRegister} />
           </form>
         </section>
         <div className="flex gap-4 justify-between items-center">
