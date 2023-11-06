@@ -1,14 +1,7 @@
 import { useState } from "react";
 
-type LoginFormData = {
-  email: string;
-  password: string;
-};
-
-type LoginErrorData = {
-  email: null | { message: string };
-  password: null | { message: string };
-};
+import { LoginErrorData, LoginFormData } from "@/types/LoginForm";
+import loginValidation from "@/utils/validators/loginValidation";
 
 const useLogin = () => {
   const [loginFormData, setLoginFormData] = useState<LoginFormData>({
@@ -25,22 +18,16 @@ const useLogin = () => {
     setLoginFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const validation = () => {
-    // validation logic:
-    // email: OK
-
-    // password: empty
-    setLoginErrors((prevPasswords) => {
-      return { ...prevPasswords, password: { message: "Empty password" } };
-    });
-  };
-
   const submitLogin = (
     e: React.ChangeEvent<HTMLButtonElement> | KeyboardEvent
   ) => {
     e.preventDefault();
-    validation();
     console.log("Logged in");
+  };
+
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    loginValidation(loginFormData, setLoginErrors);
   };
 
   return {
@@ -48,6 +35,7 @@ const useLogin = () => {
     handleInputChange,
     submitLogin,
     loginErrors,
+    handleLogin,
   };
 };
 
