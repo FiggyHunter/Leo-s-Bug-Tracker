@@ -1,15 +1,6 @@
+import registerValidation from "@/utils/validators/registerValidation";
 import { useState } from "react";
-type RegisterFormData = {
-  email: string;
-  password: string;
-  repeatPassword: string;
-};
-
-type RegisterErrorData = {
-  email: null | { message: string };
-  password: null | { message: string };
-  repeatPassword: null | { message: string };
-};
+import { RegisterErrorData, RegisterFormData } from "@/types/RegisterForm";
 
 const useRegister = () => {
   const [registerFormData, setRegisterFormData] = useState<RegisterFormData>({
@@ -29,10 +20,17 @@ const useRegister = () => {
     setRegisterFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    registerValidation(registerFormData, setRegisterErrors);
+    return;
+  };
+
   return {
     registerFormData,
     handleInputChange,
     registerErrors,
+    handleRegister,
   };
 };
 
