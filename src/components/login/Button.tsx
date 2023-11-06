@@ -1,6 +1,6 @@
 interface ButtonProps {
   text: string;
-  handler: (e: React.ChangeEvent<HTMLButtonElement>) => void;
+  handler: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button: React.FC<ButtonProps> = ({ text, handler }) => {
