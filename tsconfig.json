@@ -18,8 +18,12 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src", "tailwind.config.js", "postcss.config.js"],
+  "include": ["src", "tailwind.config.js", "postcss.config.js", "src/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
