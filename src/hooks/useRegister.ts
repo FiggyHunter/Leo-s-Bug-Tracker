@@ -1,6 +1,7 @@
 import registerValidation from "@/utils/validators/registerValidation";
 import { useState } from "react";
 import { RegisterErrorData, RegisterFormData } from "@/types/RegisterForm";
+import registerUser from "@/api/register/registerUser";
 
 const useRegister = () => {
   const [registerFormData, setRegisterFormData] = useState<RegisterFormData>({
@@ -22,7 +23,19 @@ const useRegister = () => {
 
   const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    registerValidation(registerFormData, setRegisterErrors);
+    try {
+      await registerValidation(registerFormData, setRegisterErrors);
+      await registerUser(
+        {
+          email: registerFormData.email,
+          password: registerFormData.password,
+        },
+        setRegisterErrors
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
     return;
   };
 
