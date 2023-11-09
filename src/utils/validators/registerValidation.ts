@@ -25,7 +25,10 @@ const registerValidation = async (
   } catch (errors) {
     if (errors instanceof ValidationError) {
       errors.inner.forEach((error) => {
-        if (error.path) handleErrorRegistration(error.path, error.message);
+        if (error.path) {
+          handleErrorRegistration(error.path, error.message);
+          throw new Error(error.message);
+        }
       });
     }
   }
