@@ -1,7 +1,10 @@
-import InputField from "../components/login/InputField";
-import Button from "../components/login/Button";
-import ButtonNavigation from "./ButtonNavigation";
+import InputField from "../components/shared/InputField";
+import Button from "../components/shared/Button";
+import ButtonNavigation from "../components/shared/ButtonNavigation";
 import useRegister from "../hooks/useRegister";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const {
@@ -10,6 +13,11 @@ const Register = () => {
     registerErrors,
     handleRegister,
   } = useRegister();
+  const notify = () =>
+    toast(
+      `User account ${registerFormData.email} is registered successfully. Proceed to login!`
+    );
+
   return (
     <main className="lg:grid lg:grid-cols-2 lg:place-items-center flex flex-col h-my-screen justify-center w-75p mx-auto gap-5">
       <div className="sm:order-2 place-self-center lg:w-4/5">
@@ -27,6 +35,7 @@ const Register = () => {
               type={"email"}
               handleChange={handleInputChange}
               error={registerErrors.email}
+              value={registerFormData.email}
             />
             <InputField
               placeholder={"Can we have your password?"}
@@ -34,6 +43,7 @@ const Register = () => {
               type={"password"}
               handleChange={handleInputChange}
               error={registerErrors.password}
+              value={registerFormData.password}
             />
             <InputField
               placeholder={"Can you repeat the password?"}
@@ -41,8 +51,24 @@ const Register = () => {
               type={"password"}
               handleChange={handleInputChange}
               error={registerErrors.repeatPassword}
+              value={registerFormData.repeatPassword}
             />
-            <Button text={"REGISTER"} handler={handleRegister} />
+            <Button
+              text={"REGISTER"}
+              handler={(e) => handleRegister(e, notify)}
+            />
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+            />
           </form>
         </section>
         <div className="flex gap-4 justify-between items-center">
@@ -52,7 +78,13 @@ const Register = () => {
           </span>
           <div className="border-t  flex-grow border-content"></div>
         </div>
-        <ButtonNavigation text={"LOGIN HERE"} route={"/login"} />
+        <div className="text-center">
+          <ButtonNavigation
+            styleType={"secondary"}
+            text={"LOGIN HERE"}
+            route={"/login"}
+          />
+        </div>
       </div>
       <img
         className="sm:order-1 w-4/6 lg:w-full lg:order-2 self-center rounded-3xl"
