@@ -1,44 +1,14 @@
-import InputField from "../components/login/InputField.tsx";
+import InputField from "../components/shared/InputField.tsx";
 import useLogin from "../hooks/useLogin.ts";
-import Button from "../components/login/Button";
-import ButtonNavigation from "./ButtonNavigation.tsx";
+import Button from "../components/shared/Button.tsx";
+import ButtonNavigation from "../components/shared/ButtonNavigation.tsx";
 import handleLogin from "@/api/login/loginUser.ts";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const {
-    loginFormData,
-    handleInputChange,
-    submitLogin,
-    loginErrors,
-    handleLogin,
-  } = useLogin();
+  const { handleInputChange, loginErrors, handleLogin } = useLogin();
 
-  // const navigate = useNavigate();
-
-  // const login = async () => {
-  //   const result = await Axios.post("http://localhost:4000/auth/login", {
-  //     email: email,
-  //     password: password,
-  //   });
-  //   if (result?.data) {
-  //     const { token } = result.data;
-  //     localStorage.setItem("token", token);
-  //     navigate("/bugs-overview");
-  //   }
-  // };
-
-  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setEmail(e.target.value);
-  // };
-
-  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPassword(e.target.value);
-  // };
-
-  // Theme changer:
-  // const changeTheme = (theme) => {
-  //   document.documentElement.dataset.theme = theme;
-  // };
+  const navigate = useNavigate();
 
   return (
     <main className="lg:grid lg:grid-cols-2 lg:place-items-center flex flex-col h-my-screen justify-center w-75p mx-auto gap-5">
@@ -65,7 +35,7 @@ const Login = () => {
               handleChange={handleInputChange}
               error={loginErrors.password}
             />
-            <Button text={"LOGIN"} handler={handleLogin} />
+            <Button text={"LOGIN"} handler={(e) => handleLogin(e, navigate)} />
           </form>
         </section>
         <div className="flex gap-4 justify-between items-center">
@@ -75,7 +45,13 @@ const Login = () => {
           </span>
           <div className="border-t  flex-grow border-content"></div>
         </div>
-        <ButtonNavigation text={"REGISTER HERE"} route={"/register"} />
+        <div className="text-center">
+          <ButtonNavigation
+            styleType={"secondary"}
+            text={"REGISTER HERE"}
+            route={"/register"}
+          />
+        </div>
       </div>
       <img
         className="sm:order-1 w-4/6 lg:w-full lg:order-2 self-center rounded-3xl"
