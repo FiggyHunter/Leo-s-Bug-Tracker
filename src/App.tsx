@@ -3,7 +3,7 @@ import AppRoutes from "./routes/AppRoutes.tsx";
 
 const App = () => {
   return (
-    <div className="bg-bkg">
+    <div className="bg-bkg h-my-screen">
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
