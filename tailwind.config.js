@@ -51,6 +51,12 @@ export default {
         ".h-my-screen": {
           height: ["100vh /* fallback for Opera, IE and etc. */", "100dvh"],
         },
+        ".min-h-half": {
+          minHeight: ["50%"],
+        },
+        ".max-h-half": {
+          maxHeight: ["50%"],
+        },
       });
     }),
   ],
