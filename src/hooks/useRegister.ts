@@ -21,9 +21,14 @@ const useRegister = () => {
     setRegisterFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleRegister = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    notify
+  ) => {
     e.preventDefault();
+
     try {
+      await notify();
       await registerValidation(registerFormData, setRegisterErrors);
       await registerUser(
         {
@@ -32,6 +37,8 @@ const useRegister = () => {
         },
         setRegisterErrors
       );
+
+      setRegisterFormData({ email: "", password: "", repeatPassword: "" });
     } catch (error) {
       console.log(error);
     }
