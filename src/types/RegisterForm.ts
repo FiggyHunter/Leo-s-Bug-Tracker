@@ -9,3 +9,8 @@ export type RegisterErrorData = {
   password: null | string;
   repeatPassword: null | string;
 };
+
+export type RegisterFormDataWithoutRepeat = {
+  email: string;
+  password: string;
+};
