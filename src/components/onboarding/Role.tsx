@@ -1,10 +1,10 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 
 interface Props {
   roleName: string;
   fullWidth?: boolean;
   active: boolean;
-  setRoles: any;
+  setRoles: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const activeStyle = `border-black bg-accent-1 text-black`;
