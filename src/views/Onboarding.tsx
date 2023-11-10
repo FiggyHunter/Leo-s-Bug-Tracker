@@ -14,15 +14,70 @@ interface RolesState {
   qa: Role;
   generalist: Role;
 }
+
+interface Avatar {
+  label: string;
+  imageUrl: string;
+  active: boolean;
+}
+
+interface AvatarsState {
+  panda: Avatar;
+  owl: Avatar;
+  fox: Avatar;
+  dolphin: Avatar;
+}
+
 const Onboarding = () => {
   // const tokenDecoded: null = useJwt(localStorage.getItem("token")) || null;
   // console.log(tokenDecoded);
 
   const [roles, setRoles] = useState<RolesState>({
-    developer: { roleName: "Developer", active: true },
+    developer: { roleName: "Developer", active: false },
     qa: { roleName: "QA Tester", active: false },
     generalist: { roleName: "Generalist", active: false },
   });
+
+  const [avatar, setAvatar] = useState<AvatarsState>({
+    panda: {
+      label: "panda",
+      imageUrl: "panda.webp",
+      active: false,
+    },
+    owl: {
+      label: "owl",
+      imageUrl: "owl.webp",
+      active: false,
+    },
+    fox: {
+      label: "fox",
+      imageUrl: "fox.webp",
+      active: false,
+    },
+    dolphin: {
+      label: "dolphin",
+      imageUrl: "dolphin.webp",
+      active: false,
+    },
+  });
+
+  const updateAvatar = (imageName: string) => {
+    setAvatar((prevAvatars: AvatarsState) => {
+      const updatedAvatars = Object.keys(prevAvatars).reduce<AvatarsState>(
+        (acc, key) => {
+          acc[key as keyof AvatarsState] = {
+            ...prevAvatars[key as keyof AvatarsState],
+            active: key === imageName,
+          };
+          return acc;
+        },
+        {} as AvatarsState
+      );
+
+      return updatedAvatars;
+    });
+  };
+
   const updateRole = (selectedRoleName: string) => {
     setRoles((prevRoles) => {
       const newRoles = { ...prevRoles };
@@ -46,9 +101,9 @@ const Onboarding = () => {
   };
 
   return (
-    <main className="grid grid-rows-2 h-my-screen  gap-5 lg:grid lg:grid-cols-2 lg:grid-rows-1 w-5/6 mx-auto cursor-default ">
+    <main className="grid grid-rows-2 h-screen  gap-5 lg:grid lg:grid-cols-2 lg:grid-rows-1 w-5/6 mx-auto cursor-default content-between ">
       <div className="flex flex-col gap-3 lg:h-5/6 lg:self-center ">
-        <h1 className="sm:text-center lg:text-left font-onest font-bold w-full text-content mt-2 md:text-3xl">
+        <h1 className="text-xl sm:text-center lg:text-left font-onest font-bold w-full text-content mt-2 md:text-3xl">
           SELECT YOUR ROLE
         </h1>
         <section className="flex h-4/6 gap-3">
@@ -72,26 +127,31 @@ const Onboarding = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col h-full gap-3 justify-center">
-        <h1 className="sm:text-center lg:text-left lg:hidden font-onest w-full text-content lg:order-2 lg:w-1/3 lg:self-end lg:h-12 place-content-center md:text-3xl">
+      <div className="flex flex-col h-5/6 lg:my-auto gap-3 ">
+        <h1 className="text-xl sm:text-center lg:text-left lg:hidden font-onest w-full text-content lg:order-2 lg:w-1/3 lg:self-end lg:h-12 place-content-center md:text-3xl">
           SELECT AN AVATAR
         </h1>
-        <div className="grid sm:grid-cols-2 sm:grid-rows-2 sm:items-center gap-3 md:grid-cols-4 md:grid-rows-none lg:grid-cols-2 md:grid-flow-dense w-full h-5/6 md:h-1/3 lg:h-2/3 ">
-          <Avatar />
-          <Avatar />
-          <Avatar />
-          <Avatar />
+        <div className="grid sm:grid-cols-2 sm:grid-rows-2 sm:items-center gap-3 md:grid-cols-4 md:grid-rows-none lg:grid-cols-2 md:grid-flow-dense w-full md:h-1/3 lg:h-full lg:custom-rows lg:place-content-center place-items-center ">
+          {avatar &&
+            Object.values(avatar).map((avatar) => (
+              <Avatar
+                key={avatar.label}
+                active={avatar.active}
+                setter={() => updateAvatar(avatar.label)}
+                imageUrl={avatar.imageUrl}
+              />
+            ))}
         </div>
-        <div className=" my-4 lg:hidden lg:h-12 h-min  lg:order-3 font-onest text-content lg:w-1/3  lg:self-end lg:ml-auto grid place-self-center w-2/4">
-          <ButtonNavigation text="GO TO YOUR DASHBOARD" route={"/dashboard"} />
+        <div className=" my-4 lg:hidden  h-min  lg:order-3 font-onest  lg:w-1/3  lg:ml-auto grid place-self-center w-2/4">
+          <ButtonNavigation text="CONTINUE" route={"/onboarding-name"} />
         </div>
-        <div className="hidden h-1/6   lg:flex">
+        <div className="hidden h-1/6 lg:flex px-5">
           <h1 className="font-onest font-bold w-full text-content lg:order-2 lg:w-2/3 lg:self-end lg:h-12 lg:grid content-center lg:text-2xl text-left">
             SELECT AN AVATAR
           </h1>
-          <button className="lg:h-12 lg:order-3 font-onest text-content lg:w-1/3 bg-accent-1 lg:self-end lg:ml-auto grid content-center hover:scale-95 transition-transform duration-250">
-            CONTINUE
-          </button>
+          <div className="lg:h-12 lg:order-3   lg:w-1/3  lg:self-end lg:ml-auto grid content-center hover:scale-95 transition-transform duration-250 ">
+            <ButtonNavigation text="CONTINUE" route={"/onboarding-name"} />
+          </div>
         </div>
       </div>
     </main>
