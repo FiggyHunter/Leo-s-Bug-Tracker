@@ -31,6 +31,11 @@
   }
 }
 
+:root {
+  --toastify-color-progress-dark: rgb(8, 223, 8);
+  --toastify-font-family: "Onest";
+}
+
 html {
   /* background-color: black; */
 }
