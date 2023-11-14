@@ -1,8 +1,3 @@
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="20" height="20" fill="#1E1E1E"/>
-<g id="Desktop (1920x1080)">
-<rect width="1920" height="1080" transform="translate(-263 -413)" fill="black"/>
-<rect id="Rectangle 1" x="-29.5" y="-25.5" width="510" height="69" rx="19.5" stroke="white"/>
-<path id="Vector" d="M14 10C14 12.2091 12.2091 14 10 14C7.79086 14 6 12.2091 6 10C6 7.79086 7.79086 6 10 6C12.2091 6 14 7.79086 14 10ZM14 10V11.5C14 12.8807 15.1193 14 16.5 14C17.8807 14 19 12.8807 19 11.5V10C19 5.02944 14.9706 1 10 1C5.02944 1 1 5.02944 1 10C1 14.9706 5.02944 19 10 19H14" stroke="#00A3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.4444 11C15.4444 13.4546 13.4546 15.4444 11 15.4444C8.5454 15.4444 6.55556 13.4546 6.55556 11C6.55556 8.5454 8.5454 6.55556 11 6.55556C13.4546 6.55556 15.4444 8.5454 15.4444 11ZM15.4444 11V12.6667C15.4444 14.2008 16.6881 15.4444 18.2222 15.4444C19.7563 15.4444 21 14.2008 21 12.6667V11C21 5.47716 16.5229 1 11 1C5.47716 1 1 5.47716 1 11C1 16.5229 5.47716 21 11 21H15.4444" stroke="#00A3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

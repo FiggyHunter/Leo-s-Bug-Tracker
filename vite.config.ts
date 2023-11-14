@@ -12,4 +12,14 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  build: {
+    rollupOptions: {
+      external: ["react", "react-router", "react-router-dom", "react-redux"],
+      output: {
+        globals: {
+          react: "React",
+        },
+      },
+    },
+  },
 });
