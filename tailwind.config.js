@@ -49,13 +49,19 @@ export default {
     plugin(function ({ addBase, addComponents, addUtilities, theme }) {
       addUtilities({
         ".h-my-screen": {
-          height: ["100vh /* fallback for Opera, IE and etc. */", "100dvh"],
+          minHeight: ["100vh /* fallback for Opera, IE and etc. */", "100dvh"],
         },
         ".min-h-half": {
           minHeight: ["50%"],
         },
         ".max-h-half": {
           maxHeight: ["50%"],
+        },
+        ".custom-rows": {
+          gridTemplateRows: "max-content max-content",
+        },
+        ".custom-rows-2": {
+          gridTemplateRows: "min-content 1fr",
         },
       });
     }),
