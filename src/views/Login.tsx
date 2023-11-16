@@ -2,13 +2,22 @@ import InputField from "../components/shared/InputField.tsx";
 import useLogin from "../hooks/useLogin.ts";
 import Button from "../components/shared/Button.tsx";
 import ButtonNavigation from "../components/shared/ButtonNavigation.tsx";
-import handleLogin from "@/api/login/loginUser.ts";
 import { useNavigate } from "react-router-dom";
+import { useCustomStore } from "@/store/useStore.ts";
+import { useJwt } from "react-jwt";
+import { useEffect } from "react";
 
 const Login = () => {
-  const { handleInputChange, loginErrors, handleLogin } = useLogin();
-
   const navigate = useNavigate();
+  const { handleInputChange, loginErrors, handleLogin } = useLogin();
+  const { jwt, setJwt } = useCustomStore();
+  const token = useJwt(jwt) || null;
+  useEffect(() => {
+    if (token.decodedToken && !token.isExpired) {
+      navigate("/dashboard");
+      return;
+    }
+  }, [token.decodedToken, navigate]);
 
   return (
     <main className="lg:grid lg:grid-cols-2 lg:place-items-center flex flex-col h-my-screen justify-center w-75p mx-auto gap-5">
