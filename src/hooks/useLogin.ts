@@ -2,8 +2,10 @@ import { useState } from "react";
 import { LoginErrorData, LoginFormData } from "@/types/LoginForm";
 import loginValidation from "@/utils/validators/loginValidation";
 import logInUser from "@/api/login/loginUser";
+import { useCustomStore } from "@/store/useStore";
 
 const useLogin = () => {
+  const { setJwt } = useCustomStore();
   const [loginFormData, setLoginFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -25,10 +27,12 @@ const useLogin = () => {
     try {
       e.preventDefault();
       await loginValidation(loginFormData, setLoginErrors);
-      await logInUser(loginFormData);
-      navigate("/test");
+      const token = await logInUser(loginFormData);
+      console.log(token.data);
+      setJwt(token.data);
+      navigate("/dashboard");
     } catch (e) {
-      if (e.message === "AxiosError: Request failed with status code 401")
+      if (e.message === "Incorrect Credentials")
         setLoginErrors({
           email: "Invalid creditentials",
           password: "Invalid creditentials",
