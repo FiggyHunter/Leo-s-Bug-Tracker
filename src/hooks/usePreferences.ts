@@ -45,6 +45,11 @@ const usePreferences = () => {
     avatar: "",
   });
 
+  const [userPreferenceErrors, setUserPrefferenceErrors] = useState({
+    role: false,
+    avatar: false,
+  });
+
   const findActiveRole = (roles: RolesState): string => {
     for (const key in roles) {
       if (roles[key as keyof RolesState].active) {
@@ -63,12 +68,33 @@ const usePreferences = () => {
     return "";
   };
 
-  const handlePreferenceUpdate = () => {
+  const handlePreferenceUpdate = async (navigate) => {
     console.log(token.decodedToken);
-    const data = { ...userPreference, id: token.decodedToken.sub };
-    const uri = import.meta.env.VITE_AUTH_ENDPOINT + "update";
-    console.log(data);
-    Axios.post(uri, data);
+    setUserPrefferenceErrors({ avatar: false, role: false });
+    if (userPreference.avatar === "") {
+      console.log(userPreferenceErrors);
+      setUserPrefferenceErrors((prevPreferences) => {
+        return { ...prevPreferences, avatar: true };
+      });
+      return;
+    }
+
+    if (userPreference.role === "") {
+      setUserPrefferenceErrors((prevPreferences) => {
+        return { ...prevPreferences, role: true };
+      });
+      return;
+    }
+
+    try {
+      const data = { ...userPreference, id: token.decodedToken.sub };
+      const uri = import.meta.env.VITE_AUTH_ENDPOINT + "update";
+      console.log(data);
+      await Axios.post(uri, data);
+      await navigate("/onboarding-name");
+    } catch (err) {
+      throw new Error();
+    }
   };
 
   return {
@@ -81,6 +107,7 @@ const usePreferences = () => {
     roles,
     setRoles,
     handlePreferenceUpdate,
+    userPreferenceErrors,
   };
 };
 
