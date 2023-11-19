@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes.tsx";
 
 const App = () => {
