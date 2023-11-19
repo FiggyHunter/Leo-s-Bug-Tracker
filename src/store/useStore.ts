@@ -4,8 +4,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 export const useCustomStore = create(
   persist(
     (set, get) => ({
-      jwt: "a",
-      isRehydrated: false, // New state property to track rehydration
+      jwt: "noToken",
       setJwt: (jwt: string) => set({ jwt }), // Correctly use set with an object
     }),
     {
