@@ -3,8 +3,13 @@ import { useState } from "react";
 import Button from "@/components/shared/Button";
 import { validateName } from "@/utils/validators/validateName";
 import { useNavigate } from "react-router-dom";
+import Axios from "axios";
+import { useCustomStore } from "@/store/useStore";
+import { useJwt } from "react-jwt";
 
 const OnboardingName = () => {
+  const { jwt } = useCustomStore();
+  const token = useJwt(jwt) || null;
   const navigate = useNavigate();
   const [namePreference, setNamePreference] = useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,9 +21,11 @@ const OnboardingName = () => {
     e: React.MouseEvent<HTMLButtonElement>,
     namePreference: String
   ) => {
+    const uri = import.meta.env.VITE_AUTH_ENDPOINT + "name";
     e.preventDefault();
     try {
       await validateName(namePreference, setNameError);
+      await Axios.post(uri, { ...token, Name: namePreference });
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
