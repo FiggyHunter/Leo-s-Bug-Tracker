@@ -73,9 +73,7 @@ const Register = () => {
         </section>
         <div className="flex gap-4 justify-between items-center">
           <div className="border-t  flex-grow border-content"></div>
-          <span className="font-onest text-content ">
-            Don't have an account?
-          </span>
+          <span className="font-onest text-content ">Have an account?</span>
           <div className="border-t  flex-grow border-content"></div>
         </div>
         <div className="text-center">
