@@ -10,6 +10,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({});
+
   const token = useJwt(jwt) || null; // Directly use the token
 
   console.log(token);
@@ -19,6 +20,13 @@ const Dashboard = () => {
       navigate("/login");
       return;
     }
+    if (token.decodedToken !== null)
+      if (
+        token.decodedToken.Role == "unset" ||
+        token.decodedToken.Avatar == "unset"
+      ) {
+        navigate("/onboarding");
+      }
     setUser(token.decodedToken);
   }, [token, navigate]);
 
