@@ -1,8 +1,6 @@
 import Role from "@/components/onboarding/Role";
 import Avatar from "@/components/onboarding/Avatar";
-import { useJwt } from "react-jwt";
 import { useEffect } from "react";
-import ButtonNavigation from "../components/shared/ButtonNavigation";
 import usePreferences from "@/hooks/usePreferences";
 import { AvatarsState, RolesState } from "@/types/Preferences";
 import Button from "@/components/shared/Button";
@@ -123,7 +121,10 @@ const Onboarding = () => {
             ))}
         </div>
         <div className=" my-4 lg:hidden  h-min  lg:order-3 font-onest  lg:w-1/3  lg:ml-auto grid place-self-center w-2/4">
-          <Button text="CONTINUE" handler={handlePreferenceUpdate} />
+          <Button
+            text="CONTINUE"
+            handler={() => handlePreferenceUpdate(navigate)}
+          />
         </div>
         <div className="hidden h-1/6 lg:flex px-5">
           <h1
