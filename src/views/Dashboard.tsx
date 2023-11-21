@@ -21,13 +21,19 @@ const Dashboard = () => {
       return;
     }
     if (token.decodedToken !== null)
+    {
       if (
-        token.decodedToken.Role == "unset" ||
-        token.decodedToken.Avatar == "unset"
+        token.decodedToken.Role === "unset" ||
+        token.decodedToken.Avatar ==="unset"
+
       ) {
         navigate("/onboarding");
       }
+      if(token.decodedToken.Name === "unset") {
+        navigate("/onboarding-name");
+      }
     setUser(token.decodedToken);
+    }
   }, [token, navigate]);
 
   return (
