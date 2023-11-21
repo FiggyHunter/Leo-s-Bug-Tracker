@@ -10,7 +10,7 @@ import { useEffect } from "react";
 const Login = () => {
   const navigate = useNavigate();
   const { handleInputChange, loginErrors, handleLogin } = useLogin();
-  const { jwt, setJwt } = useCustomStore();
+  const { jwt } = useCustomStore();
   const token = useJwt(jwt) || null;
   useEffect(() => {
     if (token.decodedToken && !token.isExpired) {
