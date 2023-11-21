@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import Button from "@/components/shared/Button";
 import { validateName } from "@/utils/validators/validateName";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import { useCustomStore } from "@/store/useStore";
 import { useJwt } from "react-jwt";
 
 const OnboardingName = () => {
-  const { jwt } = useCustomStore();
+  const { jwt, setJwt } = useCustomStore();
   const token = useJwt(jwt) || null;
   const navigate = useNavigate();
   const [namePreference, setNamePreference] = useState("");
@@ -25,8 +24,12 @@ const OnboardingName = () => {
     e.preventDefault();
     try {
       await validateName(namePreference, setNameError);
-      await Axios.post(uri, { ...token, Name: namePreference });
-      navigate("/dashboard");
+      const fetchedToken = await Axios.post(uri, {
+        Id: token.decodedToken.sub,
+        Name: namePreference,
+      });
+      await setJwt(fetchedToken.data);
+      await navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }
@@ -34,13 +37,17 @@ const OnboardingName = () => {
 
   return (
     <div className="grid grid-cols-1  justify-items-center h-screen w-screen">
-      <form className="grid self-center">
+      <form
+        onSubmit={(e) => verifyName(e, namePreference)}
+        className="grid self-center"
+      >
         <input
           className="text-xl lg:text-5xl text-center text-white placeholder-gray-400 font-onest font-bold bg-transparent border-b-2 border-b-white focus:border-b-accent-1 focus:outline-none"
           value={namePreference} // Bind the input value to your state
           onChange={handleChange}
           type="text"
           placeholder="ENTER YOUR NAME"
+          onSubmit={(e) => verifyName(e, namePreference)}
         />
         <label className="font-semibold text-lg lg:text-2xl font-onest text-red text-center mt-4">
           {nameError}
