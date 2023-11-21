@@ -3,9 +3,11 @@ import { LoginErrorData, LoginFormData } from "@/types/LoginForm";
 import loginValidation from "@/utils/validators/loginValidation";
 import logInUser from "@/api/login/loginUser";
 import { useCustomStore } from "@/store/useStore";
+import { useButtonLoadingStore } from "@/store/useButtonLoadingStore";
 
 const useLogin = () => {
   const { setJwt } = useCustomStore();
+  const { setButtonLoading } = useButtonLoadingStore();
   const [loginFormData, setLoginFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -26,18 +28,19 @@ const useLogin = () => {
   ) => {
     try {
       e.preventDefault();
+      setButtonLoading(true);
       await loginValidation(loginFormData, setLoginErrors);
       const token = await logInUser(loginFormData);
-      console.log(token.data);
-      setJwt(token.data);
+      await setJwt(token.data);
       navigate("/dashboard");
     } catch (e) {
+      console.log(e);
       if (e.message === "Incorrect Credentials")
         setLoginErrors({
           email: "Invalid creditentials",
           password: "Invalid creditentials",
         });
-      console.log(e);
+      setButtonLoading(false);
     }
   };
 
