@@ -1,3 +1,4 @@
+import { useButtonLoadingStore } from "@/store/useButtonLoadingStore";
 import { useCustomStore } from "@/store/useStore";
 import {
   AvatarsState,
@@ -9,7 +10,8 @@ import { useState } from "react";
 import { useJwt } from "react-jwt";
 
 const usePreferences = () => {
-  const { jwt } = useCustomStore();
+  const { jwt, setJwt } = useCustomStore();
+  const {setButtonLoading} = useButtonLoadingStore();
   const token = useJwt(jwt) || null;
   const [roles, setRoles] = useState<RolesState>({
     developer: { roleName: "Developer", active: false },
@@ -69,10 +71,8 @@ const usePreferences = () => {
   };
 
   const handlePreferenceUpdate = async (navigate) => {
-    console.log(token.decodedToken);
     setUserPrefferenceErrors({ avatar: false, role: false });
     if (userPreference.avatar === "") {
-      console.log(userPreferenceErrors);
       setUserPrefferenceErrors((prevPreferences) => {
         return { ...prevPreferences, avatar: true };
       });
@@ -87,13 +87,18 @@ const usePreferences = () => {
     }
 
     try {
-      const data = { ...userPreference, id: token.decodedToken.sub };
-      const uri = import.meta.env.VITE_AUTH_ENDPOINT + "update";
-      console.log(data);
-      await Axios.post(uri, data);
-      await navigate("/onboarding-name");
+      setButtonLoading(true);
+     const data = { ...userPreference, Id: token.decodedToken.sub };
+      const uri = import.meta.env.VITE_AUTH_ENDPOINT + "update";         
+      const fetchedToken = await Axios.post(uri, data);
+      if(fetchedToken) {
+        console.log(fetchedToken);
+        await setJwt(fetchedToken.data);
+      }
+      navigate("/onboarding-name");
+      setButtonLoading(false);
     } catch (err) {
-      throw new Error();
+      setButtonLoading(false);
     }
   };
 
