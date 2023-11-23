@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { useCustomStore } from "@/store/useStore";
 import { useJwt } from "react-jwt";
+import { useButtonLoadingStore } from "@/store/useButtonLoadingStore";
 
 const OnboardingName = () => {
   const { jwt, setJwt } = useCustomStore();
-  const token = useJwt(jwt) || null;
+  const token = useJwt(jwt) || null;   
+  const {setButtonLoading} = useButtonLoadingStore();
   const navigate = useNavigate();
   const [namePreference, setNamePreference] = useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +25,7 @@ const OnboardingName = () => {
     const uri = import.meta.env.VITE_AUTH_ENDPOINT + "name";
     e.preventDefault();
     try {
+      setButtonLoading(true);
       await validateName(namePreference, setNameError);
       const fetchedToken = await Axios.post(uri, {
         Id: token.decodedToken.sub,
@@ -30,8 +33,10 @@ const OnboardingName = () => {
       });
       await setJwt(fetchedToken.data);
       await navigate("/dashboard");
+      setButtonLoading(false);
     } catch (error) {
       console.log(error);
+      setButtonLoading(false);
     }
   };
 
