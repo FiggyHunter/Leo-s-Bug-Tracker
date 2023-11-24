@@ -14,9 +14,9 @@ const Navigation: React.FC<Props> = ({ avatar }) => {
         className=" flex justify-end gap-3 items-center
       "
       >
-        <img className="w-5 h-5 lg:w-7 lg:h-7" src="/bell.svg" />
+        <img className="w-6 h-6 lg:w-7 lg:h-7" src="/bell.svg" />
         <button className="rounded-full overflow-hidden">
-          <img className="bg-blue-300 w-5 h-5 lg:w-10 lg:h-10" src={avatar} />
+          <img className="bg-blue-300 w-8 h-8 lg:w-10 lg:h-10" src={avatar} />
         </button>
       </div>
     </nav>
