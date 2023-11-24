@@ -12,7 +12,7 @@ const Bug: React.FC<Props> = ({ bugTitle, fromProject, date }) => {
       <a className="text-accent-1 font-onest font-extrabold uppercase text-2xl">
         {bugTitle}
       </a>
-      <p className="font-onest text-content">
+      <p className="font-onest font-light text-content">
         @ {fromProject} ({date})
       </p>
     </article>
