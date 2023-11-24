@@ -28,9 +28,11 @@ const Dashboard = () => {
 
       ) {
         navigate("/onboarding");
+        return;
       }
       if(token.decodedToken.Name === "unset") {
         navigate("/onboarding-name");
+        return;
       }
     setUser(token.decodedToken);
     }
