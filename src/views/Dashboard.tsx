@@ -43,7 +43,7 @@ const Dashboard = () => {
       <header>
         <Navigation avatar={`/${user?.Avatar}`} />
       </header>
-      <main className="self-center">
+      <main className="self-center mb-12 w-10/12 mx-auto">
         <DashboardContent userName={user?.Name} />
       </main>
     </div>
