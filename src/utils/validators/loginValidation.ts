@@ -21,8 +21,8 @@ const loginValidation = async (
         if (error.path) handleErrorRegistration(error.path, error.message);
       });
     }
+    throw new Error("Validation failed");
   }
-  return;
 };
 
 export default loginValidation;
