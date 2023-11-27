@@ -32,7 +32,8 @@ const useLogin = () => {
       await loginValidation(loginFormData, setLoginErrors);
       const token = await logInUser(loginFormData);
       await setJwt(token.data);
-      navigate("/dashboard");
+      navigate("/dashboard");       
+      setButtonLoading(false);
     } catch (e) {
       console.log(e);
       if (e.message === "Incorrect Credentials")
