@@ -2,12 +2,16 @@ import React from "react";
 
 interface Props {
   avatar: string | undefined;
+  navigation: Function;
 }
 
-const Navigation: React.FC<Props> = ({ avatar }) => {
+const Navigation: React.FC<Props> = ({ navigate, avatar }) => {
   return (
     <nav className="sm:w-full lg:w-10/12  mx-auto py-3 font-onest items-center grid grid-cols-2">
-      <p className="hover:cursor-pointer text-accent-1  font-bold md:text-xl lg:text-3xl ml-2 block">
+      <p
+        onClick={navigate}
+        className="hover:cursor-pointer text-accent-1  font-bold md:text-xl lg:text-3xl ml-2 block"
+      >
         LEO'S BUG TRACKER
       </p>
       <div
