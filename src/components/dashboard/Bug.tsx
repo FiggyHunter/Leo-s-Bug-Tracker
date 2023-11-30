@@ -4,6 +4,7 @@ interface Props {
   bugTitle: String;
   fromProject: String;
   date: String;
+  type: "dashboard" | "project";
 }
 
 const Bug: React.FC<Props> = ({ bugTitle, fromProject, date }) => {
