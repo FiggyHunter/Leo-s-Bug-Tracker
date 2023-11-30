@@ -5,6 +5,7 @@ import Onboarding from "@/views/Onboarding.tsx";
 import OnboardingName from "@/views/OnboardingName.tsx";
 import Dashboard from "@/views/Dashboard.tsx";
 import Projects from "@/views/Projects.tsx";
+import Project from "@/views/Project.tsx";
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
         <Route path="onboarding-name" element={<OnboardingName />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/project" element={<Project />} />
       </Routes>
     </>
   );
