@@ -12,7 +12,7 @@ const registerUser = async (
   try {
     await Axios.post(`${uri}register`, formData);
   } catch (error: any) {
-    if (error.response.data.error === "User already exists!")
+    if (error.response.data === "User already exists!")
       setRegisterError((prevData: RegisterErrorData) => {
         return { ...prevData, email: "Email Already Exists" };
       });
