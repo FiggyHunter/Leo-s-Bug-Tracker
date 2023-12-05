@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Bug from "./Bug";
 import Project from "./Project";
 
@@ -6,6 +7,7 @@ interface Props {
 }
 
 const DashboardContent: React.FC<Props> = ({ userName }) => {
+  const navigate = useNavigate();
   return (
     <>
       <h1 className="hover:cursor-default text-center font-black text-content font-onest text-3xl w-4/5 mx-auto leading-tight lg:py-5 py-10 lg:text-6xl lg:w-full lg:pl-8">
@@ -47,7 +49,10 @@ const DashboardContent: React.FC<Props> = ({ userName }) => {
             <h2 className="mt-4 lg:mt-0 overflow-hidden text-3xl font-onest font-bold text-content">
               PROJECTS:
             </h2>
-            <button className="text-accent-1 font-onest font-bold lg:ml-auto text-xl self-center">
+            <button
+              onClick={() => navigate("/projects")}
+              className="text-accent-1 font-onest font-bold lg:ml-auto text-xl self-center"
+            >
               SEE ALL
             </button>
           </div>
