@@ -7,7 +7,7 @@ interface Props {
 
 const Navigation: React.FC<Props> = ({ navigate, avatar }) => {
   return (
-    <nav className="sm:w-full lg:w-10/12  mx-auto py-3 font-onest items-center grid grid-cols-2">
+    <nav className="sm:11/12 md:w-11/12 lg:w-10/12  mx-auto py-3 font-onest items-center grid grid-cols-2">
       <p
         onClick={navigate}
         className="hover:cursor-pointer text-accent-1  font-bold md:text-xl lg:text-3xl ml-2 block"
