@@ -44,7 +44,11 @@ const Login = () => {
               handleChange={handleInputChange}
               error={loginErrors.password}
             />
-            <Button text={"LOGIN"} handler={(e) => handleLogin(e, navigate)} />
+            <Button
+              buttonId={"test1"}
+              text={"LOGIN"}
+              handler={(e, buttonId) => handleLogin(e, navigate, buttonId)}
+            />
           </form>
         </section>
         <div className="flex gap-4 justify-between items-center">
