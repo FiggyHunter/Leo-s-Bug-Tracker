@@ -24,17 +24,19 @@ const useLogin = () => {
 
   const handleLogin = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    navigate: Function
+    navigate: Function,
+    buttonId: String
   ) => {
     try {
       e.preventDefault();
-      setButtonLoading(true);
+      setButtonLoading(buttonId, true);
       await loginValidation(loginFormData, setLoginErrors);
       const token = await logInUser(loginFormData);
       await setJwt(token.data);
-      navigate("/dashboard");       
-      setButtonLoading(false);
+      navigate("/dashboard");
+      setButtonLoading(buttonId, false);
     } catch (e) {
+      setButtonLoading(buttonId, false);
       console.log(e);
       if (e.message === "Incorrect Credentials")
         setLoginErrors({
