@@ -1,6 +1,9 @@
 import { create } from "zustand";
 
 export const useButtonLoadingStore = create((set) => ({
-  buttonLoading: false,
-  setButtonLoading: (value: boolean) => set({ buttonLoading: value }),
+  buttonLoading: {},
+  setButtonLoading: (buttonId: string, value: boolean) =>
+    set((state: any) => ({
+      buttonLoading: { ...state.buttonLoading, [buttonId]: value },
+    })),
 }));
