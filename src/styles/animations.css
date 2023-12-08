@@ -1,0 +1,12 @@
+.modal-is-open {
+  animation: fadeInAnimation 0.3s;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
