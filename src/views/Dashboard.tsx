@@ -20,21 +20,19 @@ const Dashboard = () => {
       navigate("/login");
       return;
     }
-    if (token.decodedToken !== null)
-    {
+    if (token.decodedToken !== null) {
       if (
         token.decodedToken.Role === "unset" ||
-        token.decodedToken.Avatar ==="unset"
-
+        token.decodedToken.Avatar === "unset"
       ) {
         navigate("/onboarding");
         return;
       }
-      if(token.decodedToken.Name === "unset") {
+      if (token.decodedToken.Name === "unset") {
         navigate("/onboarding-name");
         return;
       }
-    setUser(token.decodedToken);
+      setUser(token.decodedToken);
     }
   }, [token, navigate]);
 
@@ -44,7 +42,7 @@ const Dashboard = () => {
         <Navigation avatar={`/${user?.Avatar}`} />
       </header>
       <main className="self-center mb-12 w-10/12 mx-auto">
-        <DashboardContent userName={user?.Name} />
+        {!token.isExpired && <DashboardContent userName={user?.Name} />}
       </main>
     </div>
   );
