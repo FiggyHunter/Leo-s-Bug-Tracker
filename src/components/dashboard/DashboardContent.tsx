@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import Bug from "./Bug";
 import Project from "./Project";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import SkelyLoader from "./SkelyLoader";
+import { fetchProjects } from "@/api/projects/useProjects";
 
 interface Props {
   userName: string | null;
@@ -12,19 +13,8 @@ const DashboardContent: React.FC<Props> = ({ userName }) => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState({});
 
-  const fetchProjects = async () => {
-    const fetchedProjects = await axios.get("http://localhost:4000/project", {
-      headers: {
-        "X-USER-ID": "creatorUserId",
-      },
-    });
-
-    setProjects(fetchedProjects.data.projects);
-    console.log(projects);
-  };
-
   useEffect(() => {
-    fetchProjects();
+    fetchProjects(setProjects);
   }, []);
 
   return (
@@ -76,13 +66,19 @@ const DashboardContent: React.FC<Props> = ({ userName }) => {
             </button>
           </div>
 
-          {Object.values(projects)?.map((project) => (
-            <Project
-              key={project._id} // Assuming you have a unique identifier for each project
-              projectTitle={project.projectName}
-              projectDescription={project.description}
-            />
-          ))}
+          {projects === null ? (
+            <div className="bg-red text-2xl">No projects available.</div>
+          ) : Object.keys(projects).length === 0 ? (
+            <SkelyLoader />
+          ) : (
+            projects.map((project) => (
+              <Project
+                key={project._id}
+                projectTitle={project.projectName}
+                projectDescription={project.description}
+              />
+            ))
+          )}
         </div>
       </section>
     </>
