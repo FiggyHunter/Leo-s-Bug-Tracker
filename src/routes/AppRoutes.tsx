@@ -22,7 +22,7 @@ const AppRoutes = () => {
         <Route path="onboarding-name" element={<OnboardingName />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
-        <Route path="/project" element={<Project />} />
+        <Route path="/project/:projectId" element={<Project />} />
       </Routes>
     </>
   );
