@@ -22,7 +22,11 @@ const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <>
-      {error && <label className="text-red font-onest text-md transition-all duration-200">{error}</label>}
+      {error && (
+        <label className="text-red font-onest text-md transition-all duration-200">
+          {error}
+        </label>
+      )}
       <div
         className={`my-2 focus-within:border-accent-1 text-black bg-transparentFill gap-2  border-2 px-4 lg:py-4 py-2 rounded-xl flex justify-items-center transition-all duration-200 ${ErrorStyles.button.borderColor}`}
       >
@@ -31,7 +35,7 @@ const InputField: React.FC<InputFieldProps> = ({
           <img src="/lock.svg" alt="password icon" />
         )}
         <input
-          className="w-full focus:outline-none text-contentplaceholder-gray-900 font-onest font-normal text-content bg-transparentFill "
+          className="w-full focus:outline-none text-content font-onest font-normal text-content bg-transparentFill "
           name={name}
           placeholder={placeholder}
           type={type}
