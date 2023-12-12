@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ProjectCard from "./ProjectCard";
 import "../../styles/animations.css";
 import NewProjectModal from "./NewProjectModal";
-import { fetchProjects } from "@/api/projects/useProjects";
+import { fetchProjects } from "@/api/projects/projects";
 import ProjectSkeletonLoader from "./ProjectSkeletonLoader";
 
 const ProjectsContent = () => {
@@ -43,6 +43,7 @@ const ProjectsContent = () => {
           projects.map((project) => (
             <ProjectCard
               key={project._id}
+              id={project._id}
               name={project.projectName}
               description={project.description}
               color={project.color}
