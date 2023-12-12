@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import useProjectData from "@/hooks/useProjectData";
+import { addNewProject } from "@/api/projects/projects";
 
 const NewProjectModal = ({ isModalOpen }) => {
   const animatedRef = useRef(null);
@@ -21,26 +22,33 @@ const NewProjectModal = ({ isModalOpen }) => {
     >
       <p className="text-center p-4 text-lg">Project Name:</p>
       <input
+        name="project-name"
         className="text-center"
         placeholder="Type your project name here..."
         type="text"
         onChange={(e) => setProjectName(e.target.value)}
         value={projectData.projectName}
       />
+      <label htmlFor="project-name"></label>
       <input
+        name="project-desc"
         className="text-center my-4"
         placeholder="Give it a description..."
         type="text"
         onChange={(e) => setDescription(e.target.value)}
         value={projectData.description}
       />
+      <label htmlFor="project-desc"></label>
       <input
         className="mx-auto mt-2"
         type="color"
         onChange={(e) => setColor(e.target.value)}
         value={projectData.color}
       />
-      <button className="m-4 mx-auto hover:scale-95 transition-transform duration-150 w-1/2 bg-accent-1 p-2">
+      <button
+        onClick={() => addNewProject(projectData)}
+        className="m-4 mx-auto hover:scale-95 transition-transform duration-150 w-1/2 bg-accent-1 p-2"
+      >
         Save Project
       </button>
     </section>
