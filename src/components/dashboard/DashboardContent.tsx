@@ -3,7 +3,7 @@ import Bug from "./Bug";
 import Project from "./Project";
 import { useEffect, useState } from "react";
 import SkelyLoader from "./SkelyLoader";
-import { fetchProjects } from "@/api/projects/useProjects";
+import { fetchRecentProjects } from "@/api/projects/projects";
 
 interface Props {
   userName: string | null;
@@ -14,7 +14,7 @@ const DashboardContent: React.FC<Props> = ({ userName }) => {
   const [projects, setProjects] = useState({});
 
   useEffect(() => {
-    fetchProjects(setProjects);
+    fetchRecentProjects(setProjects);
   }, []);
 
   return (
