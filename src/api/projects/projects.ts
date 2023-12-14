@@ -1,16 +1,18 @@
 import axios from "axios";
-import useProjectData from "@/hooks/useProjectData";
 
-const fetchProjects = async (setProjects) => {
+const fetchProjects = async (setProjects, userId) => {
   try {
     await new Promise((resolve) => setTimeout(resolve, 100));
-    const fetchedProjects = await axios.get("http://localhost:4000/project", {
-      headers: {
-        "x-user-id": "creatorUserId2",
-      },
-    });
+    const fetchedProjects = await axios.get(
+      `${import.meta.env.VITE_REST_ENDPOINT}/project`,
+      {
+        headers: {
+          "x-user-id": userId,
+        },
+      }
+    );
 
-    console.log(fetchedProjects.data.projects);
+    console.log(userId);
 
     if (fetchedProjects.data.projects.length === 0) {
       setProjects(null);
@@ -22,18 +24,17 @@ const fetchProjects = async (setProjects) => {
   }
 };
 
-const fetchRecentProjects = async (setProjects) => {
+const fetchRecentProjects = async (setProjects, userId) => {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     const fetchedProjects = await axios.get(
-      "http://localhost:4000/project/recent",
+      `${import.meta.env.VITE_REST_ENDPOINT}/project/recent`,
       {
         headers: {
-          "x-user-id": "creatorUserId2",
+          "x-user-id": userId,
         },
       }
     );
-    console.log(fetchedProjects.data.projects);
+    console.log(fetchedProjects);
     if (fetchedProjects.data.projects.length === 0) {
       setProjects(null);
       return;
@@ -44,20 +45,25 @@ const fetchRecentProjects = async (setProjects) => {
   }
 };
 
-const addNewProject = async (projectData) => {
-  await axios.post("http://localhost:4000/project/create", projectData, {
-    headers: {
-      "x-user-id": "creatorUserId2",
-    },
-  });
-};
-
-const fetchProjectById = async (projectId: String, setProject) => {
-  const fetchedProject = await axios.get(
-    `http://localhost:4000/project/${projectId}`,
+const addNewProject = async (projectData, setProjects, userId) => {
+  await axios.post(
+    `${import.meta.env.VITE_REST_ENDPOINT}/project/create`,
+    projectData,
     {
       headers: {
-        "x-user-id": "creatorUserId2",
+        "x-user-id": userId,
+      },
+    }
+  );
+  await fetchProjects(setProjects, userId);
+};
+
+const fetchProjectById = async (projectId: String, setProject, userId) => {
+  const fetchedProject = await axios.get(
+    `${import.meta.env.VITE_REST_ENDPOINT}/project/one/${projectId}`,
+    {
+      headers: {
+        "x-user-id": userId,
       },
     }
   );
