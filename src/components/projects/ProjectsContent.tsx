@@ -5,18 +5,17 @@ import NewProjectModal from "./NewProjectModal";
 import { fetchProjects } from "@/api/projects/projects";
 import ProjectSkeletonLoader from "./ProjectSkeletonLoader";
 
-const ProjectsContent = () => {
+const ProjectsContent = ({ userName, userId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projects, setProjects] = useState({});
-  console.log(projects);
   useEffect(() => {
-    fetchProjects(setProjects);
+    fetchProjects(setProjects, userId);
   }, []);
   return (
     <>
       <div className="sm:flex-wrap relative flex justify-between items-center">
-        <h2 className="text-content w-full md:w-auto text-5xl font-onest text-center lg:text-left font-bold ">
-          Leonardo's Projects
+        <h2 className="text-content w-full md:w-auto text-5xl font-onest text-center lg:text-left font-bold cursor-default">
+          {`${userName}'s Projects`}
         </h2>
         <button
           onClick={() => setIsModalOpen((prevValue) => !prevValue)}
@@ -24,7 +23,13 @@ const ProjectsContent = () => {
         >
           New Project
         </button>
-        {isModalOpen && <NewProjectModal isModalOpen={isModalOpen} />}
+        {isModalOpen && (
+          <NewProjectModal
+            setProjects={setProjects}
+            isModalOpen={isModalOpen}
+            userId={userId}
+          />
+        )}
       </div>
       <section
         className={`grid ${
@@ -34,7 +39,7 @@ const ProjectsContent = () => {
         }  w-full gap-10 mt-7`}
       >
         {projects === null ? (
-          <div className="bg-red text-2xl place-self-cente sm:col-span-2 md:col-span-2 lg:col-span-3">
+          <div className="font-onest text-content text-2xl place-self-cente sm:col-span-2 md:col-span-2 lg:col-span-3">
             No projects available.
           </div>
         ) : Object.keys(projects).length === 0 ? (
