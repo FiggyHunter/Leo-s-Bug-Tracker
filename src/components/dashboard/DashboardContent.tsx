@@ -4,6 +4,8 @@ import Project from "./Project";
 import { useEffect, useState } from "react";
 import SkelyLoader from "./SkelyLoader";
 import { fetchRecentProjects } from "@/api/projects/projects";
+import { fetchRecentBugs } from "@/api/bugs/bugs";
+import { useIdStore } from "@/store/useUserId";
 
 interface Props {
   userName: string | null;
@@ -12,9 +14,15 @@ interface Props {
 const DashboardContent: React.FC<Props> = ({ userName }) => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState({});
+  const [bugs, setBugs] = useState({});
+
+  const { userId } = useIdStore();
+
+  console.log(userId);
 
   useEffect(() => {
-    fetchRecentProjects(setProjects);
+    fetchRecentProjects(setProjects, userId);
+    fetchRecentBugs(setBugs, userId);
   }, []);
 
   return (
@@ -27,31 +35,15 @@ const DashboardContent: React.FC<Props> = ({ userName }) => {
           <h2 className="text-3xl font-bold font-onest text-content lg:text-4xl mb-4 lg:mb-8 text-center lg:text-left ">
             YOUR RECENT BUGS:
           </h2>
-          <Bug
-            bugTitle={"Testing the title"}
-            date={new Date().toLocaleString()}
-            fromProject={"Testing project"}
-          />
-          <Bug
-            bugTitle={"Testing the title"}
-            date={new Date().toLocaleString()}
-            fromProject={"Testing project"}
-          />
-          <Bug
-            bugTitle={"Testing the title"}
-            date={new Date().toLocaleString()}
-            fromProject={"Testing project"}
-          />
-          <Bug
-            bugTitle={"Testing the title"}
-            date={new Date().toLocaleString()}
-            fromProject={"Testing project"}
-          />
-          <Bug
-            bugTitle={"Testing the title"}
-            date={new Date().toLocaleString()}
-            fromProject={"Testing project"}
-          />
+          {bugs === null ? (
+            <div className="font-onest text-content text-2xl">
+              No bugs available.
+            </div>
+          ) : Object.keys(bugs).length === 0 ? (
+            <SkelyLoader />
+          ) : (
+            bugs.map((bug) => <Bug type={"dashboard"} bug={bug} />)
+          )}
         </article>
         <div className="border-t-2  border-content  lg:border-l-2 lg:border-t-0 lg:border-content lg:pl-8 ">
           <div className="flex justify-between flex-col lg:flex-row items-center pb-4 lg:pb-8">
@@ -67,7 +59,9 @@ const DashboardContent: React.FC<Props> = ({ userName }) => {
           </div>
 
           {projects === null ? (
-            <div className="bg-red text-2xl">No projects available.</div>
+            <div className="font-onest text-content text-2xl">
+              No projects available.
+            </div>
           ) : Object.keys(projects).length === 0 ? (
             <SkelyLoader />
           ) : (
