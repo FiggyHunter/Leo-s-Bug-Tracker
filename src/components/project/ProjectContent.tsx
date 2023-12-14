@@ -2,11 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import Bug from "../dashboard/Bug";
 import "../../styles/animations.css";
 import axios from "axios";
+import { useIdStore } from "@/store/useUserId";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProjectContent = ({ projectId, projectName }) => {
   const [isBugClicked, setIsBugClicked] = useState(false);
+  const [fetchedBugs, setFetchedBugs] = useState(null);
   const animatedRef = useRef(null);
   const animatedRef2 = useRef(null);
+
+  const { userId, setUserId } = useIdStore();
 
   const [inputData, setInputData] = useState({
     projectId: projectId,
@@ -29,6 +35,17 @@ const ProjectContent = ({ projectId, projectName }) => {
   const closeBugModal = () => {
     setIsBugClicked(false);
   };
+
+  const fetchBugs = async () => {
+    const bugs = await axios.get(`${import.meta.env.VITE_REST_ENDPOINT}/bugs`, {
+      headers: {
+        "project-id": projectId,
+      },
+    });
+    console.log(bugs.data);
+    setFetchedBugs(bugs.data);
+  };
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
@@ -46,6 +63,10 @@ const ProjectContent = ({ projectId, projectName }) => {
   }, []);
 
   useEffect(() => {
+    fetchBugs();
+  }, []);
+
+  useEffect(() => {
     if (isBugClicked) {
       // Trigger animation when component becomes visible
       animatedRef?.current?.classList.add("modal-is-open");
@@ -58,6 +79,18 @@ const ProjectContent = ({ projectId, projectName }) => {
   }, [isBugClicked]);
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div className="sm:flex-wrap md:flex-nowrap flex justify-between items-center sm:w-11/12 lg:w-8/12 mx-auto mt-8">
         <h2 className="text-content sm:text-2xl md:text-5xl font-onest text-center lg:text-left font-bold mx-auto md:mx-0 lg:mx-0 ">
           {projectName}
@@ -82,10 +115,17 @@ const ProjectContent = ({ projectId, projectName }) => {
           {isBugClicked && (
             <>
               <textarea
-                onKeyDown={(e) => {
+                onKeyDown={async (e) => {
                   if (e.key === "Escape") closeBugModal();
-                  if (e.key === "Enter") {
-                    axios.post("http://localhost:4000/bugs/create", inputData);
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    await axios.post(
+                      `${import.meta.env.VITE_REST_ENDPOINT}/bugs/create`,
+                      inputData,
+                      {
+                        headers: { "x-user-id": userId },
+                      }
+                    );
+                    toast("Added bug successfully!");
                   }
                 }}
                 name="Text1"
@@ -99,14 +139,27 @@ const ProjectContent = ({ projectId, projectName }) => {
                 className="pb-16 w-full relative z-10 font-onest transition-all focus:border-accent-1 focus:outline-none font-medium mt-3 mt-1 bg-bkg border-content border-2 rounded-md p-2 text-content order-2"
               />
               <div
+                onKeyDown={async (e) => {
+                  if (e.key === "Escape") closeBugModal();
+                  if (e.key === "Enter") {
+                    await axios.post(
+                      `${import.meta.env.VITE_REST_ENDPOINT}/bugs/create`,
+                      inputData,
+                      {
+                        headers: { "x-user-id": userId },
+                      }
+                    );
+                    toast("Added bug successfully!");
+                  }
+                }}
                 ref={animatedRef}
                 className="min-h-screen h-full w-full fixed bg-bkg transition-all duration-200 top-0 left-0 z-0 "
               ></div>
               <h3 className="text-content z-10 relative order-1 font-onest font-light text-4xl">
-                Welcome to the{" "}
+                Welcome to the ‎
                 <span className="font-onest font-bold text-accent-1">
                   focus zone.
-                </span>{" "}
+                </span>
               </h3>
               <h4 className="text-content z-10 relative order-5 font-onest font-light text-xl mt-2">
                 When you are done
@@ -127,14 +180,20 @@ const ProjectContent = ({ projectId, projectName }) => {
             </>
           )}
         </div>
-        <Bug
-          type={"project"}
-          bugTitle={
-            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima necessitatibus provident voluptatibus commodi a animi."
-          }
-          date={new Date().toLocaleString()}
-          fromProject={"Testing project"}
-        />
+        {fetchedBugs === null ? (
+          <h1>test</h1>
+        ) : (
+          fetchedBugs?.map((fetchedBug) => (
+            <Bug
+              type={"project"}
+              bugTitle={fetchedBug.title}
+              date={fetchedBug.timestamp}
+              fromProject={projectName}
+              bug={fetchedBug}
+              fetchBugs={fetchBugs}
+            />
+          ))
+        )}
       </section>
     </>
   );
