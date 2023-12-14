@@ -37,7 +37,6 @@ const useLogin = () => {
       setButtonLoading(buttonId, false);
     } catch (e) {
       setButtonLoading(buttonId, false);
-      console.log(e);
       if (e.message === "Incorrect Credentials")
         setLoginErrors({
           email: "Invalid creditentials",
