@@ -1,15 +1,15 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 export const useCustomStore = create(
   persist(
     (set, get) => ({
       jwt: "noToken",
-      setJwt: (jwt: string) => set({ jwt }), // Correctly use set with an object
+      setJwt: (jwt: string) => set({ jwt }),
     }),
     {
       onRehydrateStorage: () => (state) => {},
-      name: "jwt", // name of the item in the storage (must be unique)
+      name: "combinedStore", // Choose a unique name for the storage
     }
   )
 );
