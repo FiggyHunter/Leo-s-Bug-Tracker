@@ -12,8 +12,6 @@ const fetchProjects = async (setProjects, userId) => {
       }
     );
 
-    console.log(userId);
-
     if (fetchedProjects.data.projects.length === 0) {
       setProjects(null);
       return;
@@ -25,16 +23,17 @@ const fetchProjects = async (setProjects, userId) => {
 };
 
 const fetchRecentProjects = async (setProjects, userId) => {
+  if (userId === "") return;
+
   try {
     const fetchedProjects = await axios.get(
       `${import.meta.env.VITE_REST_ENDPOINT}/project/recent`,
       {
         headers: {
-          "x-user-id": userId,
+          "X-USER-ID": userId,
         },
       }
     );
-    console.log(fetchedProjects);
     if (fetchedProjects.data.projects.length === 0) {
       setProjects(null);
       return;
