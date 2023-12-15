@@ -2,8 +2,10 @@ import registerValidation from "@/utils/validators/registerValidation";
 import { useState } from "react";
 import { RegisterErrorData, RegisterFormData } from "@/types/RegisterForm";
 import registerUser from "@/api/register/registerUser";
+import { useButtonLoadingStore } from "@/store/useButtonLoadingStore";
 
 const useRegister = () => {
+  const { setButtonLoading } = useButtonLoadingStore();
   const [registerFormData, setRegisterFormData] = useState<RegisterFormData>({
     email: "",
     password: "",
@@ -23,11 +25,12 @@ const useRegister = () => {
 
   const handleRegister = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    notify: Function
+    navigate: Function,
+    buttonId: String
   ) => {
     e.preventDefault();
-
     try {
+      setButtonLoading(buttonId, true);
       await registerValidation(registerFormData, setRegisterErrors);
       await registerUser(
         {
@@ -36,11 +39,10 @@ const useRegister = () => {
         },
         setRegisterErrors
       );
-      await notify();
-
+      setButtonLoading(buttonId, false);
       setRegisterFormData({ email: "", password: "", repeatPassword: "" });
     } catch (error) {
-      console.log(error);
+      setButtonLoading(buttonId, false);
     }
 
     return;
