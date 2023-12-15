@@ -54,8 +54,10 @@ const Register = () => {
               value={registerFormData.repeatPassword}
             />
             <Button
+              buttonId={"test2"}
               text={"REGISTER"}
-              handler={(e) => handleRegister(e, notify)}
+              notify={notify}
+              handler={handleRegister}
             />
             <ToastContainer
               position="top-right"

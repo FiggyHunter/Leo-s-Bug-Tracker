@@ -47,7 +47,8 @@ const Login = () => {
             <Button
               buttonId={"test1"}
               text={"LOGIN"}
-              handler={(e, buttonId) => handleLogin(e, navigate, buttonId)}
+              handler={handleLogin}
+              navigate={navigate}
             />
           </form>
         </section>
