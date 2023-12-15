@@ -2,11 +2,12 @@ import axios from "axios";
 
 const fetchRecentBugs = async (setBugs, userId) => {
   try {
+    if (userId === "") return;
     const fetchedBugs = await axios.get(
       `${import.meta.env.VITE_REST_ENDPOINT}/bugs/recent`,
       {
         headers: {
-          "x-user-id": userId,
+          "X-USER-ID": userId,
         },
       }
     );
@@ -15,7 +16,6 @@ const fetchRecentBugs = async (setBugs, userId) => {
       setBugs(null);
       return;
     }
-
     setBugs(fetchedBugs.data);
   } catch (error) {
     console.error("Error fetching projects:", error);
