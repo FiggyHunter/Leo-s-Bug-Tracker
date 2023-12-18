@@ -6,16 +6,13 @@ import OnboardingName from "@/views/OnboardingName.tsx";
 import Dashboard from "@/views/Dashboard.tsx";
 import Projects from "@/views/Projects.tsx";
 import Project from "@/views/Project.tsx";
+import Profile from "@/views/Profile.tsx";
 
 const AppRoutes = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route
-          path="/hello"
-          element={<div className="text-7xl">Vozdrica</div>}
-        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/onboarding" element={<Onboarding />} />
@@ -23,6 +20,7 @@ const AppRoutes = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/project/:projectId" element={<Project />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );
