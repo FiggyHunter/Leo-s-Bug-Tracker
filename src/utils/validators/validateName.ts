@@ -11,7 +11,6 @@ export const validateName = async (
   } catch (errors) {
     if (errors instanceof ValidationError)
       errors.inner.forEach((error) => {
-        console.log(error.message);
         setErrors(error.message);
         throw new Error(error.message);
       });

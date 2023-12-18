@@ -11,7 +11,7 @@ import { useJwt } from "react-jwt";
 
 const usePreferences = () => {
   const { jwt, setJwt } = useCustomStore();
-  const {setButtonLoading} = useButtonLoadingStore();
+  const { setButtonLoading } = useButtonLoadingStore();
   const token = useJwt(jwt) || null;
   const [roles, setRoles] = useState<RolesState>({
     developer: { roleName: "Developer", active: false },
@@ -88,11 +88,10 @@ const usePreferences = () => {
 
     try {
       setButtonLoading(true);
-     const data = { ...userPreference, Id: token.decodedToken.sub };
-      const uri = import.meta.env.VITE_AUTH_ENDPOINT + "update";         
+      const data = { ...userPreference, Id: token.decodedToken.sub };
+      const uri = import.meta.env.VITE_AUTH_ENDPOINT + "update";
       const fetchedToken = await Axios.post(uri, data);
-      if(fetchedToken) {
-        console.log(fetchedToken);
+      if (fetchedToken) {
         await setJwt(fetchedToken.data);
       }
       navigate("/onboarding-name");

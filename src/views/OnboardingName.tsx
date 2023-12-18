@@ -9,8 +9,8 @@ import { useButtonLoadingStore } from "@/store/useButtonLoadingStore";
 
 const OnboardingName = () => {
   const { jwt, setJwt } = useCustomStore();
-  const token = useJwt(jwt) || null;   
-  const {setButtonLoading} = useButtonLoadingStore();
+  const token = useJwt(jwt) || null;
+  const { setButtonLoading } = useButtonLoadingStore();
   const navigate = useNavigate();
   const [namePreference, setNamePreference] = useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +35,6 @@ const OnboardingName = () => {
       await navigate("/dashboard");
       setButtonLoading(false);
     } catch (error) {
-      console.log(error);
       setButtonLoading(false);
     }
   };
@@ -47,7 +46,7 @@ const OnboardingName = () => {
         className="grid self-center"
       >
         <input
-          className="text-xl lg:text-5xl text-center text-white placeholder-gray-400 font-onest font-bold bg-transparent border-b-2 border-b-white focus:border-b-accent-1 focus:outline-none"
+          className="text-xl lg:text-5xl text-center text-content placeholder-gray-400 font-onest font-bold bg-transparent border-b-2 border-b-white focus:border-b-accent-1 focus:outline-none"
           value={namePreference} // Bind the input value to your state
           onChange={handleChange}
           type="text"

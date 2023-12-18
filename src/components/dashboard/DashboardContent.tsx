@@ -18,12 +18,10 @@ const DashboardContent: React.FC<Props> = ({ userName }) => {
 
   const { userId } = useIdStore();
 
-  console.log(userId);
-
   useEffect(() => {
     fetchRecentProjects(setProjects, userId);
     fetchRecentBugs(setBugs, userId);
-  }, []);
+  }, [userId]);
 
   return (
     <>

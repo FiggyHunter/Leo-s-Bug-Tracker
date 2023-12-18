@@ -16,7 +16,6 @@ const Dashboard = () => {
   useEffect(() => {
     // Validate the jwt value obtained from the store
     if (!jwt) {
-      console.log("No jwt, navigating to /login");
       navigate("/login");
       return;
     }
@@ -33,13 +32,11 @@ const Dashboard = () => {
         token.decodedToken.Role === "unset" ||
         token.decodedToken.Avatar === "unset"
       ) {
-        console.log("Role or Avatar unset, navigating to /onboarding");
         navigate("/onboarding");
         return;
       }
 
       if (token.decodedToken.Name === "unset") {
-        console.log("Name unset, navigating to /onboarding-name");
         navigate("/onboarding-name");
         return;
       }
@@ -52,12 +49,10 @@ const Dashboard = () => {
   return (
     <div className="h-my-screen grid custom-rows-2 grid-cols-1">
       <header>
-        <Navigation avatar={`/${user?.Avatar}`} />
+        <Navigation navigate={navigate} avatar={`/${user?.Avatar}`} />
       </header>
       <main className="self-center mb-12 w-10/12 mx-auto">
-        {!token.isExpired && (
-          <DashboardContent userName={user?.Name} userId={userId} />
-        )}
+        {!token.isExpired && <DashboardContent userName={user?.Name} />}
       </main>
     </div>
   );

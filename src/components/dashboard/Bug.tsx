@@ -16,7 +16,6 @@ const Bug: React.FC<Props> = ({ fetchBugs, type, bug }) => {
   const fromProject = bug.projectId;
   const fetchProjectName = async () => {
     try {
-      console.log(fromProject);
       const response = await axios.get(
         `${import.meta.env.VITE_REST_ENDPOINT}/project/info`,
         {
