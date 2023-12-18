@@ -11,6 +11,7 @@ const ProjectContent = ({ projectId, projectName }) => {
   const [fetchedBugs, setFetchedBugs] = useState(null);
   const animatedRef = useRef(null);
   const animatedRef2 = useRef(null);
+  const animatedRef3 = useRef(null);
 
   const { userId, setUserId } = useIdStore();
 
@@ -42,7 +43,6 @@ const ProjectContent = ({ projectId, projectName }) => {
         "project-id": projectId,
       },
     });
-    console.log(bugs.data);
     setFetchedBugs(bugs.data);
   };
 
@@ -71,10 +71,12 @@ const ProjectContent = ({ projectId, projectName }) => {
       // Trigger animation when component becomes visible
       animatedRef?.current?.classList.add("modal-is-open");
       animatedRef2?.current?.classList.add("modal-is-open");
+      animatedRef3?.current?.classList.add("modal-is-open");
     } else {
       // Reset animation when component becomes invisible
       animatedRef?.current?.classList.remove("modal-is-open");
-      animatedRef2?.current?.classList.add("modal-is-open");
+      animatedRef2?.current?.classList.remove("modal-is-open");
+      animatedRef3?.current?.classList.remove("modal-is-open");
     }
   }, [isBugClicked]);
   return (
@@ -155,7 +157,10 @@ const ProjectContent = ({ projectId, projectName }) => {
                 ref={animatedRef}
                 className="min-h-screen h-full w-full fixed bg-bkg transition-all duration-200 top-0 left-0 z-0 "
               ></div>
-              <h3 className="text-content z-10 relative order-1 font-onest font-light text-4xl">
+              <h3
+                ref={animatedRef3}
+                className="text-content z-10 relative order-1 font-onest font-light text-4xl"
+              >
                 Welcome to the ‎
                 <span className="font-onest font-bold text-accent-1">
                   focus zone.
