@@ -12,10 +12,44 @@ const Project = () => {
   const params = useParams();
 
   const { jwt } = useCustomStore();
-
+  const [user, setUser] = useState({});
+  const token = useJwt(jwt) || null;
   const { projectId } = params;
   const [project, setProject] = useState({});
   const { userId } = useIdStore();
+  useEffect(() => {
+    // Validate the jwt value obtained from the store
+    if (!jwt) {
+      navigate("/login");
+      return;
+    }
+
+    if (token.isExpired) {
+      // Implement token refresh or logout if expired
+      navigate("/login");
+      return;
+    }
+
+    if (token.decodedToken) {
+      // Additional checks for decoded token properties
+      if (
+        token.decodedToken.Role === "unset" ||
+        token.decodedToken.Avatar === "unset"
+      ) {
+        navigate("/onboarding");
+        return;
+      }
+
+      if (token.decodedToken.Name === "unset") {
+        navigate("/onboarding-name");
+        return;
+      }
+
+      // Set user and user ID
+      setUser(token.decodedToken);
+    }
+  }, [token.decodedToken]);
+
   useEffect(() => {
     fetchProjectById(projectId, setProject, userId);
   }, []);
@@ -23,6 +57,7 @@ const Project = () => {
     <>
       <header>
         <Navigation
+          avatar={`/${user?.Avatar}`}
           navigate={() => {
             navigate("/dashboard");
           }}
