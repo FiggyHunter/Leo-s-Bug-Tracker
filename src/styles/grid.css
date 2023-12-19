@@ -1,0 +1,7 @@
+.grid-rows-custom {
+  grid-template-rows: min-content auto;
+}
+
+.grid-rows-custom-2 {
+  grid-template-rows: min-content auto auto;
+}
