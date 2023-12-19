@@ -4,6 +4,7 @@ import { useCustomStore } from "@/store/useStore";
 import { useEffect, useState } from "react";
 import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
+import "@/styles/grid.css";
 
 const Profile = () => {
   const { jwt } = useCustomStore();
@@ -46,13 +47,13 @@ const Profile = () => {
   }, [token.decodedToken]);
 
   return (
-    <>
-      <header className="h-fit bg-red">
+    <div className="h-my-screen grid  grid-rows-custom">
+      <header className="h-fit">
         <Navigation navigate={navigate} avatar={`/${user?.Avatar}`} />
       </header>
 
-      <ProfileContent />
-    </>
+      <ProfileContent name={token?.decodedToken?.Name} />
+    </div>
   );
 };
 
