@@ -25,7 +25,7 @@ const ProfileContent = ({ name }) => {
       </section>
       <section className="grid mt-8 sm:grid-cols-1 md:grid-cols-1 sm:justify-items-center md:sm:justify-items-center lg:grid-cols-2 lg:justify-items-stretch sm:gap-5 lg:gap-0 grid-cols-2 sm:w-11/12 md:w-11/12 lg:w-10/12 mx-auto lg:gap-10 lg:content-center lg:mb-24  ">
         <article>
-          <h3 className="font-onest font-bold sm:text-base sm:text-center lg:text-4xl text-accent-1">
+          <h3 className="font-onest font-bold sm:text-base sm:text-center md:text-xl lg:text-4xl text-accent-1">
             BASIC INFORMATION, CLICK TO EDIT
           </h3>
           <div className="flex sm:flex-col md:flex-col lg:flex-row  items-center gap-5 sm:w-5/6 lg:w-5/6 sm:mx-auto text-center sm:mt-6 lg:mt-12">
