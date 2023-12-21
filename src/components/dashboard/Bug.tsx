@@ -64,19 +64,26 @@ const Bug: React.FC<Props> = ({ fetchBugs, type, bug }) => {
         )}
 
         {isOpen && type === "project" && (
-          <button
-            onClick={async (e) => {
-              await axios.patch(
-                `${import.meta.env.VITE_REST_ENDPOINT}/bugs/update/${bug._id}`
-              );
-              await fetchBugs();
-            }}
-            className="p-2 px-5 bg-accent-1 my-2 w-fit"
-          >
-            {bug.completed === false
-              ? "Mark as completed"
-              : "Mark as incomplete"}
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={async (e) => {
+                await axios.patch(
+                  `${import.meta.env.VITE_REST_ENDPOINT}/bugs/update/${bug._id}`
+                );
+                await fetchBugs();
+              }}
+              className="p-2 px-5 bg-accent-1 my-2 w-fit"
+            >
+              {bug.completed === false
+                ? "Mark as completed"
+                : "Mark as incomplete"}
+            </button>
+            {isOpen && type === "project" && (
+              <button className="p-2 px-5 bg-rose-600 text-content my-2 w-fit">
+                Delete the bug
+              </button>
+            )}{" "}
+          </div>
         )}
       </div>
 
